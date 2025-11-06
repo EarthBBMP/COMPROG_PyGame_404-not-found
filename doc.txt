@@ -1,0 +1,131 @@
+SIDE SCROLL TEST GAME (Documentation)
+
+This is a simple side-scrolling game using Pygame.
+Player moves left/right. The camera follows the player.
+Objects in the world can be interacted with using key "E".
+If the player is close to an object, a quest window pops up.
+
+------------------------------------------------------------
+1. MAIN CONCEPTS
+------------------------------------------------------------
+
+WORLD SPACE:
+    - Everything in the game has a world position (big map).
+    - Example: an object might be at x = 1600.
+    - Player has a world position px.
+
+SCREEN SPACE:
+    - The monitor is only 900 pixels wide.
+    - We must convert world positions to screen positions.
+    - The camera determines what part of the world is visible.
+
+CAMERA:
+    - The camera's x-position is cam = px.
+    - This keeps the player centered on the screen.
+    - Objects do not move. The camera moves, which makes objects
+      appear to scroll left/right.
+
+WORLD → SCREEN CONVERSION:
+    screen_x = world_x - camera_x + (screen_width / 2)
+
+    Meaning:
+        - (world_x - camera_x): distance from camera
+        - + screen_center: draw relative to the middle of the screen
+
+    Only x is changed. Y stays the same because we are not
+    scrolling vertically.
+
+------------------------------------------------------------
+2. IMPORTANT GAME VARIABLES
+------------------------------------------------------------
+
+px, py      → player position in the world  
+pw, ph      → player size  
+spd         → movement speed  
+cam         → camera x-position (follows player)  
+gy          → ground level  
+
+objs[]      → list of interactable objects  
+rng         → distance required to interact  
+q           → True if quest window is open  
+tgt         → current selected object  
+e_lock      → prevents E key from triggering multiple times  
+
+------------------------------------------------------------
+3. FUNCTIONS
+------------------------------------------------------------
+
+bg(cam)
+    Draws the scrolling background.
+    Uses a gradient.
+    Offset depends on camera, so the background scrolls smoothly.
+
+w2s(x, y, cam)
+    "World to screen"
+    Converts world coordinates to screen coordinates.
+    The key formula used for scrolling:
+        screen_x = x - cam + W//2
+
+draw_objs(cam)
+    Draws interactable objects at the correct screen position.
+    Each object is drawn as a simple rectangle.
+
+nearest(px)
+    Returns the nearest interactable object to the player's
+    world position. Also returns the distance.
+
+draw_player(cam)
+    Draws the player rectangle at the correct screen position.
+
+hud(cam)
+    Draws the top bar showing player's world x-position.
+    Shows an "[E] interact" hint when close to an object.
+
+quest()
+    Draws the quest window overlay.
+    Displayed when q == True.
+
+------------------------------------------------------------
+4. MAIN LOOP
+------------------------------------------------------------
+
+Runs every frame:
+    - Processes keyboard input
+        • Left/Right movement (only when q is False)
+        • E opens/closes quest window
+        • ESC closes quest window
+
+    - Updates camera position
+        cam = px    # camera follows player
+
+    - Draw order:
+        bg → objects → player → HUD → quest
+
+    - Refresh screen at 60 FPS
+
+------------------------------------------------------------
+5. HOW SCROLLING WORKS (SIMPLE)
+------------------------------------------------------------
+
+Objects DO NOT move.
+Camera moves (same as player x).
+We draw objects offset by the camera.
+
+If camera moves right:
+    screen_x = world_x - bigger_number + center
+          → smaller
+          → object appears to move left
+
+This creates the scrolling effect.
+
+------------------------------------------------------------
+6. KEYS
+------------------------------------------------------------
+
+Left  / A  → move left  
+Right / D  → move right  
+E          → interact (open quest)  
+Esc        → close quest  
+
+------------------------------------------------------------
+END
