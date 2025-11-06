@@ -86,7 +86,7 @@ A game window should open.
 
 ---
 
-## ✅ Troubleshooting
+## Troubleshooting
 
 **“git: command not found”**  
 Reinstall Git.
