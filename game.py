@@ -49,7 +49,7 @@ GROUND_Y = H - GROUND_H  #ground y position
 MAP_1 = 1
 MAP_2 = 2
 current_map = MAP_1
-MAP2_REPEATS = 3  #repeat map 2 bg 3 times
+MAP2_REPEATS = 3  #repeat map bg 3 times
 
 #object images
 obj_box = pygame.image.load("image/Box.png").convert_alpha()
