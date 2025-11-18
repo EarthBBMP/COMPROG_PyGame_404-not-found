@@ -1,3 +1,5 @@
+#*****download pygame,sys,os lib before running this code if dont have it******
+
 import pygame
 import sys
 import math
