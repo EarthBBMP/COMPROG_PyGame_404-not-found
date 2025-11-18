@@ -1,4 +1,5 @@
 #*****download pygame,sys,os lib before running this code if dont have it******
+#Or play online with https://replit.com/join/msuiszxspj-earthbbmp
 
 import pygame
 import sys
